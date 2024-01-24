@@ -54,7 +54,7 @@ function generateHTML() {
             ); // ^^ читаем каждый компонент в папке с компонентами, если он файл и он имеет расширение html
 
             readFile.on('data', (data) => {
-              html = html.replace(`{{${path.parse(file.name).name}}}`, data);
+              html = html.replaceAll(`{{${path.parse(file.name).name}}}`, data);
             }); //  ^^ заменяем ссылки в html на текст из компонентов  папки компонентов
             readFile.on('end', () => {
               fs.createWriteStream(
@@ -93,7 +93,7 @@ function copyDir(pathName, folderName) {
         if (file.isFile()) {
           fs.copyFile(
             path.join(file.path, file.name),
-            path.join(file.path.replaceAll(__dirname, pathProjectDist), file.name), 
+            path.join(file.path.replace(__dirname, pathProjectDist), file.name), 
             (err) => { // если внутри папки assets или папках, находящихся в assets только файлы, то они копируются в соответствующие папки-копии 
               if (err) console.log(err);
             },
